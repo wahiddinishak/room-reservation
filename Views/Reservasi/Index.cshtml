@@ -1,0 +1,98 @@
+﻿@model IEnumerable<LPS.Models.tblT_Reservasi>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, Reflection.Mvc.Pging
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <div class="form-row">
+            <div class="col-6">
+                <a class="btn btn-primary" asp-action="AddOrEdit">Create New Reservation</a>
+            </div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <input type="text" name="SearchString" value="@ViewData["currentFilter"]" class="form-control" placeholder="Ketik: Ruangan, Subjek, atau Tanggal." aria-label="Ketik: Ruangan, Subjek, atau Tanggal." aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit">Cari</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        @*<p>
+                <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                <input type="submit" value="Cari" class="btn btn-primary btn-sm" />
+            </p>*@
+    </div>
+</form>
+
+<table class="table table-hover dt-responsive nowrap" style="width: 100%;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ruangan_FK)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubjectReservasi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TanggalReservasi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JamMulai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JamSelesai)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ruangan_FK)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubjectReservasi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TanggalReservasi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JamMulai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JamSelesai)
+                </td>
+                <td>
+                    <a asp-action="AddOrEdit" asp-route-id="@item.Reservasi_PK">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Reservasi_PK" onclick="return confirm('Are you sure to delete ?')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav class="navbar navbar-expand-sm navbar-light flex-nowrap justify-content-center bg-transparent">
+    <span class="navbar-brand w-100"></span>
+    <div class="navbar-collapse collapse w-100 justify-content-center m-3 h4">
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+    </div>
+    <div class="w-100"></div>
+</nav>
+
+
+@section Scripts {
+
+
+
+}
